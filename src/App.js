@@ -5,10 +5,6 @@ import Product from "./components/Product";
 import CarroCompras from "./components/Carro";
 import { useState } from "react";
 
-
-
-
-
 function App() {
   const [visible, setVisible] = useState(false);
   const [ItemsCarro, setItemCarro] = useState([])
@@ -39,18 +35,22 @@ function App() {
         exists.SubTotal = parseInt(exists.Product.Precio) * exists.Cantidad 
       }
       setItemCarro(ItemsCarro)
+      UpdateTotal(ItemsCarro)
     }
     if(Action === 'Remove'){
       const Items = ItemsCarro.filter(x => x.Product.Id !== Product.Id)
+      console.log(Items)
       setItemCarro(Items)
+      UpdateTotal(Items)
     }
-    UpdateTotal()
+    
   }
 
-  const UpdateTotal = () => {
-    const Total = ItemsCarro.map(i=>parseInt(i.SubTotal)).reduce((a,b)=>parseInt(a)+parseInt(b))
+  const UpdateTotal = (array) => {
+    //console.log(ItemsCarro)
+    const Total = array.map(i=>parseInt(i.SubTotal)).reduce((a,b)=>parseInt(a)+parseInt(b), 0)
     setTotal(Total)
-    //console.log(Total)
+    console.log(Total)
   }
 
   return (
