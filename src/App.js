@@ -3,9 +3,28 @@ import Products from "../src/data.json";
 import Navbar from "./components/Navbar";
 import Product from "./components/Product";
 import CarroCompras from "./components/Carro";
-import { useState } from "react";
+import React, { useState } from "react";
+import axios from 'axios';
 
 function App() {
+
+  const baseUrl = "https://localhost:7038/api/Products/getProducts"
+  const [data, setData] = React.useState([])
+  
+  const getData = async() => {
+    await axios.get(baseUrl)
+      .then(res => { setData(res.data)})
+      .catch(error => {
+      console.log(error)})
+  }
+
+  React.useEffect(()=> {
+    getData();
+  }, [])
+
+  console.log(data)
+
+
   const [visible, setVisible] = useState(false);
   const [ItemsCarro, setItemCarro] = useState([])
   const [Total, setTotal] = useState(0)
